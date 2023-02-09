@@ -1,3 +1,6 @@
+<?php
+use Core\Session;
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -73,7 +76,7 @@
       <header class="pb-3 mb-4 border-bottom ">
       <nav class="navbar navbar-expand-lg bg-body-tertiary rounded-4">
         <div class="container-fluid">
-        <a class="navbar-brand bg-info p-3 rounded-4 text-white nav-logo rounded " href="<?= _link('')?>">My Website</a>
+          <a class="navbar-brand bg-info p-3 rounded-4 text-white nav-logo rounded " href="<?= _link('')?>">My Website</a>
           <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -113,25 +116,87 @@
         </div>
       </nav>
       </header>
-        <div class="row bg-light pb-5 rounded-3">
-          <div class="position-relative pt-5 ">
-            <h4 class="position-absolute top-0 end-0 bg-success p-2 mt-2 me-2 text-white rounded-3">
-              Toplam Kullanıcı : <?=($data['toplam'][0]['toplam'])?>
-            </h4>
-          </div>
-            <?php foreach($data['users'] as $key  => $value): ?>
-              <a href="<?= _link('kullanıcı/'.$value['id'])?>" class="col-lg-4 col-md-6 d-flex justify-content-center mt-5  text-decoration-none">
-                <div class="card" style="width: 18rem; ">
-                    <img src="App/image/<?=$value['image']?>" class="card-img-top img-thumbnail" style="width: auto; height: 300px;" alt="...">
-                    <div class="card-body">
-                      <h4 class="card-text text-center text-dark"><?=$value['name'].' '.$value['surname']?></h4>
-                    </div>
-                </div>
-              </a>
-            <?php endforeach; ?>
+
+      <div class="p-5 mb-4 bg-light rounded-3 ">
+        <div class="row">
+            <div class="col-md-6 mb-2  d-flex justify-content-center">
+              <div style=" width: 300px; height: 300px; overflow: hidden; background: #cccccc;">
+                <img src="/çalışmalar/Phpmywebsite/App/image/<?=($data['users']['image'])?>" style="height: 100%; width: 100%;"  class=" img-fluid rounded" alt="">
+              </div>     
+            </div>
+            <div class="card col-md-6">
+              <ul class="list-group list-group-flush text-center">
+                <li class="list-group-item">
+                  <div class="col-12 mb-2 mt-2 justify-content-center ">
+                    <div class="col-12 ">
+                      <h3><?= $data['users']['name'].' '.$data['users']['surname']?></h3>
+                    </div>     
+                  </div>
+               </li>
+               <li class="list-group-item">
+                  <div class="col-12 mb-2 mt-2 justify-content-center ">
+                    <div class="col-12 ">
+                      <h3><?= $data['users']['email']?></h3>
+                    </div>     
+                  </div>
+               </li>
+               <li class="list-group-item">
+                  <div class="col-12 mb-2 mt-2 justify-content-center ">
+                    <div class="col-12 ">
+                      <h3><?= $data['users']['phone']?></h3>
+                    </div>     
+                  </div>
+               </li>
+               <li class="list-group-item">
+                  <div class="col-12 mb-2 mt-2 justify-content-center ">
+                    <div class="col-12 ">
+                      <h3><?= $data['users']['created_date']?></h3>
+                    </div>     
+                  </div>
+               </li>
+               <li class="list-group-item">
+                  <div class="col-12 mb-2 mt-2 justify-content-center ">
+                      <form  id="begen">
+                        <button type="submit" class="btn btn-info text-white" value="begendi" id="begendi">Beğen</button>
+                      </form>    
+                  </div>
+               </li>
+              </ul>
+            </div>
         </div>
+      </div>    
     </div>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js" integrity="sha512-L4lHq2JI/GoKsERT8KYa72iCwfSrKYWEyaBxzJeeITM9Lub5vlTj8tufqYk056exhjo2QDEipJrg6zen/DDtoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    const begen = document.getElementById('begen');
+
+    begen.addEventListener('submit', (e)=>{
+      let begendi = document.getElementById('begendi').value;
+      
+      let formData = new FormData();
+      formData.append('begendi',begendi);
+
+      axios.post('<?= _link('begendi')?>',formData)
+        .then(res => {
+          setInterval(function() {
+            if (res.data.redirect) {
+              window.location.href = res.data.redirect;
+            }
+          }, 3000);
+          
+            Swal.fire(
+            res.data.title,
+            res.data.msg,
+            res.data.status
+          )
+        })
+        .catch((err) => {console.log(err)})
+      
+      e.preventDefault();
+    });
+  </script>
+</body>
 </html>

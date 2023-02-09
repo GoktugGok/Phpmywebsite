@@ -91,7 +91,7 @@ use Core\Session;
                   <a class="nav-link" href="#">Project</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Customer</a>
+                  <a class="nav-link" href="<?= _link('musteri')?>">Customer</a>
                 </li>
               </ul>
             </div>

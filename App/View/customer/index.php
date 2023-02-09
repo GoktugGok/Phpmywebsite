@@ -73,7 +73,7 @@
       <header class="pb-3 mb-4 border-bottom ">
       <nav class="navbar navbar-expand-lg bg-body-tertiary rounded-4">
         <div class="container-fluid">
-        <a class="navbar-brand bg-info p-3 rounded-4 text-white nav-logo rounded " href="<?= _link('')?>">My Website</a>
+          <a class="navbar-brand bg-info p-3 rounded-4 text-white nav-logo rounded " href="<?= _link('')?>">My Website</a>
           <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -113,25 +113,97 @@
         </div>
       </nav>
       </header>
-        <div class="row bg-light pb-5 rounded-3">
-          <div class="position-relative pt-5 ">
-            <h4 class="position-absolute top-0 end-0 bg-success p-2 mt-2 me-2 text-white rounded-3">
-              Toplam Kullanıcı : <?=($data['toplam'][0]['toplam'])?>
-            </h4>
+
+      <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="row ">
+          <div class="col-md-6 d-flex  align-items-start mt-2">
+            <div class="container-fluid mt-4 ">
+              <h2 class="mt-5 ms-4 text-center ">Kayıtlı tuttunuz <br> müşterileriniz burda güvenli.</h2>
+              <div class="d-flex justify-content-center mt-5">
+                <a href="<?= _link('musteri/ekle')?>" class="btn btn-primary btn-lg  align-end" type="button">Müşteri Ekle</a>
+              </div>
+              
+            </div>
           </div>
-            <?php foreach($data['users'] as $key  => $value): ?>
-              <a href="<?= _link('kullanıcı/'.$value['id'])?>" class="col-lg-4 col-md-6 d-flex justify-content-center mt-5  text-decoration-none">
-                <div class="card" style="width: 18rem; ">
-                    <img src="App/image/<?=$value['image']?>" class="card-img-top img-thumbnail" style="width: auto; height: 300px;" alt="...">
-                    <div class="card-body">
-                      <h4 class="card-text text-center text-dark"><?=$value['name'].' '.$value['surname']?></h4>
-                    </div>
-                </div>
-              </a>
-            <?php endforeach; ?>
+          <div class="col-md-6 d-flex justify-content-center align-items-center mt-5 ">
+            <img src="App/image/müşteri-1.png" class="img-fluid " alt="">
+          </div>
         </div>
+      </div>
+      <footer class="pt-3 mt-4 text-muted border-top">
+       
+      </footer>
+      <div class="row align-items-md-stretch">
+        <div class="col-12">
+          <div class="px-2 py-5 bg-white rounded-3">
+            <h1 class="text-center mb-3">Liste</h1>
+            <div class="table-responsive">
+            <table class="table border table-striped">
+            <thead>
+              <tr>
+                  <th></th>
+                  <th scope="col">İsim</th>
+                  <th scope="col">Soyisim</th>
+                  <th scope="col">Şirket İsmi</th>
+                  <th scope="col">Mail</th>
+                  <th scope="col">Telefon</th>
+                  <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                <?php $count = 1; ?>
+                <?php foreach($data['customers'] as $key  => $value): ?>
+              <tr>
+              <td scope="row"><?= $count++ ?>. </td>
+                  <td><?=$value['name']?></td>
+                  <td><?=$value['surname']?></td>
+                  <td><?=$value['company']?></td>
+                  <td><?=$value['email']?></td>
+                  <td><?=$value['phone']?></td>
+                  <td>
+                    <div class="btn-group btn-group-sm d-flex justify-content-center">
+                      <button class="btn btn-sm btn-danger" onclick="removeCustomer('<?= $value['id'] ?>')" >Sil</button>
+                      <a href="<?=_link('musteri/guncelle/'.$value['id'])?>" class="btn btn-sm btn-info">Düzenle</a>
+                    </div>
+                  </td>
+              </tr>
+            </tbody>
+              <?php endforeach; ?>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
     </div>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js" integrity="sha512-L4lHq2JI/GoKsERT8KYa72iCwfSrKYWEyaBxzJeeITM9Lub5vlTj8tufqYk056exhjo2QDEipJrg6zen/DDtoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    function removeCustomer(id){
+      let customer_id = id;
+
+      let formData = new FormData();
+      formData.append('customer_id',customer_id);
+      
+      axios.post('<?= _link('musteri/sil')?>',formData)
+        .then(res => {
+            if (res.data.redirect) {
+              window.location.href = res.data.redirect;
+            }
+            Swal.fire(
+            res.data.title,
+            res.data.msg,
+            res.data.status
+          )
+        })
+        .catch((err) => {console.log(err)});
+        
+    }
+
+  
+</script>
+</body>
 </html>

@@ -2,17 +2,16 @@
 
 namespace App\Controllers;
 
+use App\Model\HomeModel;
 use Core\BaseController;
 use Core\Session;
 
 class Home extends BaseController{
     public function Index(){
-        $users = [
-            'isim' => 'göktuğ',
-            'soyisim' => 'gök',
-            'yas' => 18
-        ];
-        
-        echo $this->view->load('home/index',compact('users'));
+        $homeModel = new HomeModel();
+        $data['users'] = $homeModel->users();
+        $data['toplam'] = $homeModel->toplam();
+
+        echo $this->view->load('home/index',compact('data'));
     }
 }

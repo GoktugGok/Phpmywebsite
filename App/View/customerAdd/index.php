@@ -119,143 +119,60 @@ use Core\Session;
       </header>
 
       <div class="p-5 mb-4 bg-light rounded-3">
-        <form class=" row g-3 m-auto rounded-2 " style="width: 100%;" id="profil">
+        <form class=" row g-3 m-auto rounded-2 " style="width: 100%;" id="muşteriEkle">
+          <div class="col-12 text-center"><h1>Müşteri Ekle</h1></div>
           <div class="col-md-6">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" value="<?= sess('name') ?>">
+            <input type="text" class="form-control" id="name" >
           </div>
           <div class="col-md-6">
             <label for="surname" class="form-label">Surname</label>
-            <input type="text" class="form-control" id="surname" value="<?= sess('surname') ?>">
+            <input type="text" class="form-control" id="surname" >
+          </div>
+          <div class="col-md-6">
+            <label for="company" class="form-label">Company</label>
+            <input type="text" class="form-control" id="company">
           </div>
           <div class="col-md-6">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" value="<?= sess('email') ?>">
+            <input type="email" class="form-control" id="email">
           </div>
-          <div class="col-md-6">
+          <div class="col-md-12">
             <label for="phone" class="form-label">Phone</label>
-            <input type="text" pattern="[0-9]{10}" title="Telefon numaranızı doğru giriniz" maxlength="10" class="form-control" id="phone" value="<?= sess('phone') ?>">
+            <input type="text" pattern="[0-9]{10}" title="Telefon numaranızı doğru giriniz" maxlength="10" class="form-control" id="phone" >
             <div class="d-flex justify-content-start pt-2">
               <p class="fs-6 fst-italic font-monospace border border-danger rounded-3 w-70 h-0 px-2 ">5554443322 şeklinde girin</p> 
             </div>
           </div>
           <div class="col-md-12">
-            <button type="submit "  style="width: 100%; " class="btn btn-primary">Düzenle</button>
-          </div>
-        </form>
-      </div>
-      <div class="p-5 mb-4 bg-light rounded-3">
-        <form class=" row g-3 m-auto rounded-2 " style="width: 100%;" id="image">
-          <div class="user-image mb-3 text-center">
-              <div style="width: 100px; height: 100px; overflow: hidden; background: #cccccc; margin: 0 auto">
-                <img src="App/image/<?=sess('image')?>"  class="figure-img img-fluid rounded" id="imgPlaceholder" alt="">
-              </div>
-          </div>
-          <div class="custom-file">
-            <div class=" mb-3">
-              <label for="chooseFile" class="form-label">Image</label>
-              <input type="file"  class="form-control" id="chooseFile">
-            </div>
-          </div>
-          <div class="col-md-12">
-            <button type="submit "  style="width: 100%; " class="btn btn-primary">Düzenle</button>
-          </div>
-          </form>
-      </div>
-      <div class="p-5 mb-4 bg-light rounded-3">
-        <form class=" row g-3 m-auto rounded-2 " style="width: 100%;" id="passwords">
-          <div class="col-md-6">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" >
-          </div>
-          <div class="col-md-6">
-            <label for="newpassword" class="form-label">New Password</label>
-            <input type="password" class="form-control" id="newpassword" >
-          </div>
-          <div class="col-md-6">
-            <label for="againpassword" class="form-label">Again Password</label>
-            <input type="password" class="form-control" id="againpassword">
-          </div>
-          <div class="col-12">
-            <p class="fs-6 fst-italic font-monospace text-center border border-danger rounded-4">Şifreniz en az altı haneli en az bir büyük harf en az bir sayı olmalı</p> 
-          </div>
-          <div class="col-md-12">
-            <button type="submit "  style="width: 100%; " class="btn btn-primary">Düzenle</button>
+            <a href="<?= _link('musteri')?>" class="text-white fs-3 text-decoration-none"><button type="submit "  style="width: 100%; " class="btn btn-primary ">Düzenle</button></a>
           </div>
         </form>
       </div>
     </div>
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js" integrity="sha512-L4lHq2JI/GoKsERT8KYa72iCwfSrKYWEyaBxzJeeITM9Lub5vlTj8tufqYk056exhjo2QDEipJrg6zen/DDtoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
  <script>
-    const profil = document.getElementById('profil');
+    const muşteriEkle = document.getElementById('muşteriEkle');
 
-    profil.addEventListener('submit',(e)=>{
+    muşteriEkle.addEventListener('submit',(e)=>{
       let name = document.getElementById('name').value;
       let surname = document.getElementById('surname').value;
       let email = document.getElementById('email').value;
+      let company = document.getElementById('company').value;
       let phone = document.getElementById('phone').value;
 
       let formData = new FormData();
       formData.append('name',name);
       formData.append('surname',surname);
       formData.append('email',email);
+      formData.append('company',company);
       formData.append('phone',phone);
       
-      axios.post('<?= _link('/düzenle/guncelle')?>',formData)
-        .then(res => {
-          if (res.data.redirect) {
-              window.location.href = res.data.redirect;
-            }
-            Swal.fire(
-            res.data.title,
-            res.data.msg,
-            res.data.status
-          )
-        })
-        .catch((err) => {console.log(err)})
-      e.preventDefault();
-    });
-
-    const image = document.getElementById('image');
-
-    image.addEventListener('submit',(e)=>{
-      let chooseFile = document.getElementById('chooseFile').value;
-
-      let formData = new FormData();
-      formData.append('chooseFile',chooseFile);
-      console.log(chooseFile);
-      axios.post('<?= _link('/düzenle/img')?>',formData)
-        .then(res => {
-          if (res.data.redirect) {
-              window.location.href = res.data.redirect;
-            }
-            Swal.fire(
-            res.data.title,
-            res.data.msg,
-            res.data.status
-          )
-        })
-        .catch((err) => {console.log(err)})
-      e.preventDefault();
-    });
-
-    const passwords = document.getElementById('passwords');
-
-    passwords.addEventListener('submit',(e)=>{
-      let password = document.getElementById('password').value;
-      let newpassword = document.getElementById('newpassword').value;
-      let againpassword = document.getElementById('againpassword').value;
-
-      let formData = new FormData();
-      formData.append('password',password);
-      formData.append('newpassword',newpassword);
-      formData.append('againpassword',againpassword);
-      
-      axios.post('<?= _link('/düzenle/sifre')?>',formData)
+      axios.post('<?= _link('musteri/ekle')?>',formData)
         .then(res => {
           if (res.data.redirect) {
               window.location.href = res.data.redirect;
