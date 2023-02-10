@@ -15,6 +15,5 @@ class Users extends BaseController{
     }
     public function Like(){
         $data = $this->request->post();
-        print_r($data);
     }
 }

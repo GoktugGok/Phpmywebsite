@@ -20,6 +20,7 @@ class authModel extends BaseModel{
             Session::setSession('password', $user['password']);
             Session::setSession('phone', $user['phone']);
             Session::setSession('tarih', $user['created_date']);
+            Session::setSession('image', $user['image']);
             return true;
         }else{
             return false;

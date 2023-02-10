@@ -32,6 +32,7 @@ class Auth extends BaseController{
 
         if (!$login) {
             session_destroy();
+            session_reset();
             redirect('welcome');
         }
     }

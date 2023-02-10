@@ -124,7 +124,7 @@ use Core\Session;
                 <div class="col-12 bg-dark d-flex justify-content-center align-items-center  rounded-3"><h2 class="justify-content-center align-items-center pt-2 text-white">Hesap Bilgileri</h2></div>      
             </div>
             <div class="col-12 d-flex  mb-2 mt-5">
-              <div style="width: 200px; height: 200px; overflow: hidden; background: #cccccc;">
+              <div style="width: 400px; height: 400px;  overflow: hidden; background: #cccccc;">
                 <img src="App/image/<?=sess('image')?>"  class=" img-fluid rounded" alt="">
               </div>     
             </div>

@@ -1,3 +1,10 @@
+<?php
+
+use Core\Session;
+
+session_destroy();
+print_r(Session::getAllSession()) ;
+?>
 <!doctype html>
 <html lang="en">
   <head>

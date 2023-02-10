@@ -154,13 +154,6 @@ use Core\Session;
                     </div>     
                   </div>
                </li>
-               <li class="list-group-item">
-                  <div class="col-12 mb-2 mt-2 justify-content-center ">
-                      <form  id="begen">
-                        <button type="submit" class="btn btn-info text-white" value="begendi" id="begendi">Beğen</button>
-                      </form>    
-                  </div>
-               </li>
               </ul>
             </div>
         </div>
@@ -175,8 +168,9 @@ use Core\Session;
 
     begen.addEventListener('submit', (e)=>{
       let begendi = document.getElementById('begendi').value;
-      
-      let formData = new FormData();
+      document.querySelector('#begendi').classList.add('bg-danger');
+
+      let formData = new FormData();  
       formData.append('begendi',begendi);
 
       axios.post('<?= _link('begendi')?>',formData)
